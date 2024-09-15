@@ -42,7 +42,7 @@ komp = ["AgACAgIAAxkBAAM9ZudQXFpqRLQPoxkxgCv41AM7KjQAAnvmMRusfEFLxLVJngRCJZoBAAM
 
 @dp.message()
 async def filter(message: aiogram.types.Message):
-    if message.from_user.id == hohol:
+    if message.from_user.id == hohol and message.text:
         if "компик" in message.text and ("сид" in message.text
                                          or " за " in message.text
                                          or "сиж" in message.text):
@@ -50,13 +50,17 @@ async def filter(message: aiogram.types.Message):
         elif "пиво" in message.text or "пива" in message.text:
             await message.reply_photo(pivo[random.randint(0, len(pivo)-1)])
     if message.from_user.id in pendos:
-        tmp = len(re.compile(r'[a-zA-Z.,!?;:\'\" ]').findall(message.text))
-        if tmp > len(message.text) * 0.9:
-            ru = trans.translate_text(message.text, "yandex", to_language="ru")
-            logging.info(f"said: {message.text}, trans: {ru}")
-            # nick = message.from_user.full_name
+        # tmp1 = len(re.compile(r'[a-zA-Z.,!?;:\'\" ]').findall(message.text))
+        tmp2 = len(re.compile(r'[а-яА-Я ]').findall(message.text))
+        # if tmp1 > len(message.text) * 0.9:
+        ru = trans.translate_text(message.text, "yandex", to_language="ru")
+        logging.info(f"said: {message.text}, trans: {ru}")
+        # nick = message.from_user.full_name
+        if ru == message.text and len(message.text) * 0.5 > tmp2:
+            await message.answer("Богдаун пытался что-то сказать, но у него не получилось")
+        else:
             await message.answer(f"Богдаун сказал: {ru}")
-            await message.delete()
+        await message.delete()
     # message.content_type == aiogram.types.ContentType.VIDEO:
 
 
