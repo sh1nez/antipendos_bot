@@ -53,7 +53,7 @@ async def filter(message: aiogram.types.Message):
         # tmp1 = len(re.compile(r'[a-zA-Z.,!?;:\'\" ]').findall(message.text))
         tmp2 = len(re.compile(r'[а-яА-Я ]').findall(message.text))
         # if tmp1 > len(message.text) * 0.9:
-        ru = trans.translate_text(message.text, "yandex", to_language="ru")
+        ru = trans.translate_text(message.text, "google", to_language="ru")
         logging.info(f"said: {message.text}, trans: {ru}")
         # nick = message.from_user.full_name
         if ru == message.text and len(message.text) * 0.5 > tmp2:
